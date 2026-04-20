@@ -1,0 +1,22 @@
+{
+  "name": "project-management-platform",
+  "version": "1.0.0",
+  "description": "project management platform for begineers",
+  "keywords": [
+    "my",
+    "course",
+    "backend",
+    "api"
+  ],
+  "license": "ISC",
+  "author": "aarushi koirala",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "dev": "node index.js"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.3"
+  }
+}
