@@ -1,6 +1,5 @@
 import Mailgen from "mailgen";
 import nodemailer from "nodemailer";
-import Mail from "nodemailer/lib/mailer";
 
 //sending the email(method)
 const sendEmail = async (options) => {
@@ -45,7 +44,7 @@ const sendEmail = async (options) => {
 };
 
 //Prepare the email
-const emailVerificationMailgenContent = (username, verificationToken) => {
+const emailVerificationMailgenContent = (username, verificationUrl) => {
   return {
     body: {
       name: username,

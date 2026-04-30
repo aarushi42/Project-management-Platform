@@ -1,12 +1,13 @@
 import { User } from "../models/user.model.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { ApiError } from "../utils/apiError.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { sendEmail } from "../utils/emailService.js";
+import { asyncHandler } from "../utils/async-handler.js";
+import { sendEmail } from "../utils/mail.js";
+import { emailVerificationMailgenContent } from "../utils/mail.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
-    const user = User.findById(userId);
+    const user = await User.findById(userId);
     const accessToken = user.generateAccessToken();
     const refreshToken = user.generateRefreshToken();
 
@@ -52,7 +53,7 @@ const registerUser = asyncHandler(async (req, res) => {
   await sendEmail({
     email: user?.email,
     subject: "Email Verification",
-    mailgenContent: emailVerificationMailgenConetnt(
+    mailgenContent: emailVerificationMailgenContent(
       user?.username,
       `${req.protocol}://${req.get("host")}/api/v1/users/verify-email/${unHashedToken}`, //dynamic verification link
     ),
