@@ -2,7 +2,9 @@ import Mailgen from "mailgen";
 import nodemailer from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
 
+//sending the email(method)
 const sendEmail = async (options) => {
+  // putting branding from mailgen
   const mailGenerator = new Mailgen({
     theme: "default",
     product: {
@@ -10,9 +12,12 @@ const sendEmail = async (options) => {
       link: "https://www.projectmanagementplatform.com",
     },
   });
+
   const emailTextual = mailGenerator.generatePlaintext(options.mailgenContent);
+
   const emailHTML = mailGenerator.generate(options.mailgenContent);
 
+  //creating transporter for sending the email using nodemailer
   const transporter = nodemailer.createTransport({
     host: process.env.MAILTRAP_SMTP_HOST,
     port: process.env.MAILTRAP_SMTP_PORT,
@@ -22,6 +27,7 @@ const sendEmail = async (options) => {
     },
   });
 
+  // creating the mail
   const mail = {
     from: "mail.taskmanager@example.com",
     to: options.email,
@@ -30,6 +36,7 @@ const sendEmail = async (options) => {
     html: emailHTML,
   };
 
+  // sending the email
   try {
     await transporter.sendMail(mail);
   } catch (error) {
@@ -37,6 +44,7 @@ const sendEmail = async (options) => {
   }
 };
 
+//Prepare the email
 const emailVerificationMailgenContent = (username, verificationToken) => {
   return {
     body: {
@@ -78,4 +86,8 @@ const forgotPasswordMailgenContent = (username, passwordResetUrl) => {
   };
 };
 
-export { emailVerificationMailgenContent, forgotPasswordMailgenContent };
+export {
+  emailVerificationMailgenContent,
+  forgotPasswordMailgenContent,
+  sendEmail,
+};
