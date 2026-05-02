@@ -339,7 +339,7 @@ const resetForgottenPassword = asyncHandler(async (req, res) => {
   const { newPassword } = req.body;
   //get hashed token from the params
   const hashedToken = crypto
-    .createHash(sha256)
+    .createHash("sha256")
     .update(resetToken)
     .digest("hex");
   //find user based on token and expiry
