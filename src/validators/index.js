@@ -45,4 +45,51 @@ const userLoginValidator = () => {
   ];
 };
 
-export { userRegisterValidator, userLoginValidator };
+const userChangeCurrentPasswordValidator = () => {
+  return [
+    body("oldPassword").notEmpty().withMessage("Old password is required"),
+    body("newPassword")
+      .trim()
+      .notEmpty()
+      .withMessage("New password is required")
+      .isLength({ min: 6 })
+      .withMessage("New password must be at least 6 characters long")
+      .isStrongPassword()
+      .withMessage(
+        "New password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol",
+      ),
+  ];
+};
+
+const userForgotPasswordValidator = () => {
+  return [
+    body("email")
+      .notEmpty()
+      .withMessage("Email is required")
+      .isEmail()
+      .withMessage("Invalid email format"),
+  ];
+};
+
+const userResetForgotPasswordValidator = () => {
+  return [
+    body("newPassword")
+      .trim()
+      .notEmpty()
+      .withMessage("New password is required")
+      .isLength({ min: 6 })
+      .withMessage("New password must be at least 6 characters long")
+      .isStrongPassword()
+      .withMessage(
+        "New password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol",
+      ),
+  ];
+};
+
+export {
+  userRegisterValidator,
+  userLoginValidator,
+  userResetForgotPasswordValidator,
+  userChangeCurrentPasswordValidator,
+  userForgotPasswordValidator,
+};
