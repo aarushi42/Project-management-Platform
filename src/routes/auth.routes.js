@@ -20,7 +20,6 @@ import {
   userForgotPasswordValidator,
 } from "../validators/index.js";
 import { validate } from "../middlewares/validator.middleware.js";
-import { get } from "mongoose";
 
 const router = Router();
 
