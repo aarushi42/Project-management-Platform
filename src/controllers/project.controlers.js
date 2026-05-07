@@ -8,7 +8,7 @@ import { sendEmail } from "../utils/mail.js";
 import {
   emailVerificationMailgenContent,
   forgotPasswordMailgenContent,
-} from "../utils/mail.js";
+} from "../utils/mail.js"; //Todo sending email when the user gets added to a project
 import { Mongoose } from "mongoose";
 import { UserRolesEnum } from "../utils/constants.js";
 
