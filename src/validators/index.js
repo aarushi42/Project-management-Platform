@@ -1,5 +1,5 @@
 import { body } from "express-validator";
-import { AvailableUserRole } from "../utils/constants";
+import { AvailableUserRole, AvailableTasksStatues } from "../utils/constants";
 
 const userRegisterValidator = () => {
   return [
@@ -112,6 +112,77 @@ const addMembersToProjectValidator = () => {
   ];
 };
 
+const createTaskValidator = () => {
+  return [
+    body("title")
+      .trim()
+      .notEmpty()
+      .withMessage("Task title is required")
+      .isLength({ min: 1, max: 200 })
+      .withMessage("Task title must be between 1 and 200 characters"),
+
+    body("description").optional().trim(),
+
+    body("status")
+      .optional()
+      .isIn(AvailableTasksStatues)
+      .withMessage("Invalid task status"),
+
+    body("assignedTo")
+      .optional()
+      .isMongoId()
+      .withMessage("Invalid assignee ID"),
+  ];
+};
+
+const updateTaskValidator = () => {
+  return [
+    body("title")
+      .optional()
+      .trim()
+      .isLength({ min: 1, max: 200 })
+      .withMessage("Task title must be between 1 and 200 characters"),
+
+    body("description").optional().trim(),
+
+    body("status")
+      .optional()
+      .isIn(AvailableTasksStatues)
+      .withMessage("Invalid task status"),
+
+    body("assignedTo")
+      .optional()
+      .isMongoId()
+      .withMessage("Invalid assignee ID"),
+  ];
+};
+
+const createSubTaskValidator = () => {
+  return [
+    body("title")
+      .trim()
+      .notEmpty()
+      .withMessage("Subtask title is required")
+      .isLength({ min: 1, max: 200 })
+      .withMessage("Subtask title must be between 1 and 200 characters"),
+  ];
+};
+
+const updateSubTaskValidator = () => {
+  return [
+    body("title")
+      .optional()
+      .trim()
+      .isLength({ min: 1, max: 200 })
+      .withMessage("Subtask title must be between 1 and 200 characters"),
+
+    body("isCompleted")
+      .optional()
+      .isBoolean()
+      .withMessage("isCompleted must be a boolean"),
+  ];
+};
+
 export {
   userRegisterValidator,
   userLoginValidator,
@@ -120,4 +191,8 @@ export {
   userForgotPasswordValidator,
   createProjectValidator,
   addMembersToProjectValidator,
+  createTaskValidator,
+  updateTaskValidator,
+  createSubTaskValidator,
+  updateSubTaskValidator,
 };
